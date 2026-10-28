@@ -70,17 +70,6 @@
               <button class="home-auth__link home-auth__link--logout" type="button" id="home-logout-btn">Log out</button>
             </div>
           `;
-
-          const logoutBtn = authPanel.querySelector("#home-logout-btn");
-          if (logoutBtn) {
-            logoutBtn.addEventListener("click", () => {
-              try {
-                localStorage.removeItem("oops_session");
-                localStorage.removeItem("ck_user");
-              } catch (e) {}
-              syncHomeAuthState();
-            });
-          }
         }
       } else {
         authButton.setAttribute("aria-label", "Account options");
@@ -113,6 +102,18 @@
     authButton.addEventListener("click", () => {
       setAuthMenuOpen(authMenu.dataset.open !== "true");
     });
+    if (authPanel) {
+      authPanel.addEventListener("click", event => {
+        const logoutButton = event.target.closest("#home-logout-btn");
+        if (!logoutButton) return;
+
+        localStorage.removeItem("oops_session");
+        localStorage.removeItem("ck_user");
+        syncHomeAuthState();
+        setAuthMenuOpen(false);
+        authButton.focus();
+      });
+    }
     authMenu.addEventListener("focusout", event => {
       if (!authMenu.contains(event.relatedTarget)) setAuthMenuOpen(false);
     });
