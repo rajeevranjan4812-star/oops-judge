@@ -1,0 +1,498 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#120f17">
+  <meta name="description" content="Page not found — CodeKaro">
+  <title>404 — Page Not Found | CodeKaro</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Play:wght@400;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="./navbar.css">
+  <link rel="stylesheet" href="./theme.css">
+  <script src="./theme.js"></script>
+
+  <style>
+    /* ── Design Tokens (matching CodeKaro dark theme) ── */
+    :root {
+      color-scheme: dark;
+      font-family: "Play", ui-sans-serif, system-ui, sans-serif;
+
+      --ck-bg:           #120f17;
+      --ck-surface:      rgba(255,255,255,0.035);
+      --ck-border:       rgba(220,229,247,0.10);
+      --ck-border-hover: rgba(180,155,255,0.40);
+      --ck-text:         #f4f4f6;
+      --ck-muted:        #8e8e9e;
+      --ck-accent:       #784bff;
+      --ck-accent-glow:  rgba(120,75,255,0.22);
+      --ck-accent-soft:  rgba(120,75,255,0.08);
+      --ck-nav-bg:       rgba(18,15,23,0.82);
+      --ck-nav-border:   rgba(220,229,247,0.06);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      height: 100%;
+      background: var(--ck-bg);
+      color: var(--ck-text);
+    }
+
+    /* ── Starfield background ── */
+    body {
+      overflow: hidden;
+      position: relative;
+    }
+
+    .stars {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .star {
+      position: absolute;
+      border-radius: 50%;
+      background: #fff;
+      animation: twinkle var(--dur, 3s) ease-in-out infinite var(--delay, 0s);
+      opacity: 0;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0; transform: scale(0.8); }
+      50%       { opacity: var(--max-op, 0.6); transform: scale(1); }
+    }
+
+    /* ── Navbar ── */
+    .ck-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+      background: var(--ck-nav-bg);
+      border-bottom: 1px solid var(--ck-nav-border);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      gap: 12px;
+    }
+
+    .ck-nav__logo {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      text-decoration: none;
+      color: var(--ck-text);
+      font-family: "Audiowide", sans-serif;
+      font-size: 15px;
+      letter-spacing: 0.02em;
+      flex-shrink: 0;
+    }
+
+    .ck-nav__logo-icon {
+      width: 28px; height: 28px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #784bff 0%, #26d7f4 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px;
+    }
+
+    .ck-nav__spacer { flex: 1; }
+
+    .ck-nav__back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--ck-border);
+      background: var(--ck-surface);
+      color: var(--ck-muted);
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: border-color .18s ease, color .18s ease, background .18s ease;
+    }
+
+    .ck-nav__back:hover {
+      border-color: var(--ck-border-hover);
+      color: var(--ck-text);
+      background: var(--ck-accent-soft);
+    }
+
+    /* ── Main content ── */
+    main {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 56px 24px 40px;
+      text-align: center;
+    }
+
+    /* ── Browser window mockup ── */
+    .browser-window {
+      width: min(520px, 100%);
+      border-radius: 14px;
+      border: 1px solid var(--ck-border);
+      background: #16131f;
+      box-shadow:
+        0 0 0 1px rgba(120,75,255,0.12),
+        0 24px 80px rgba(0,0,0,0.55),
+        0 0 120px var(--ck-accent-glow);
+      overflow: hidden;
+      animation: float 5s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50%       { transform: translateY(-10px); }
+    }
+
+    /* Chrome / title bar */
+    .browser-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      background: #120f1c;
+      border-bottom: 1px solid var(--ck-border);
+    }
+
+    .browser-dots {
+      display: flex;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .browser-dot {
+      width: 11px; height: 11px;
+      border-radius: 50%;
+    }
+    .browser-dot--red    { background: #ff5f57; }
+    .browser-dot--yellow { background: #ffbd2e; }
+    .browser-dot--green  { background: #28ca41; }
+
+    .browser-url {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 10px;
+      border-radius: 6px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.07);
+      font-size: 12px;
+      color: var(--ck-muted);
+      font-family: ui-monospace, monospace;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .browser-url__lock {
+      font-size: 11px;
+      flex-shrink: 0;
+      opacity: 0.5;
+    }
+
+    .browser-url__text {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Browser body */
+    .browser-body {
+      padding: 40px 32px 44px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .error-code {
+      font-family: "Audiowide", sans-serif;
+      font-size: clamp(64px, 16vw, 96px);
+      font-weight: 900;
+      line-height: 1;
+      background: linear-gradient(135deg, #784bff 0%, #26d7f4 60%, #c9adff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 24px rgba(120,75,255,0.45));
+      letter-spacing: -2px;
+    }
+
+    .error-emoji {
+      font-size: 36px;
+      line-height: 1;
+      animation: wobble 2.4s ease-in-out infinite;
+    }
+
+    @keyframes wobble {
+      0%, 100% { transform: rotate(-4deg); }
+      50%       { transform: rotate(6deg); }
+    }
+
+    .error-title {
+      font-family: "Audiowide", sans-serif;
+      font-size: 18px;
+      color: var(--ck-text);
+      letter-spacing: 0.04em;
+    }
+
+    .error-desc {
+      font-size: 13.5px;
+      color: var(--ck-muted);
+      line-height: 1.65;
+      max-width: 340px;
+    }
+
+    /* Divider */
+    .browser-divider {
+      width: 100%;
+      height: 1px;
+      background: var(--ck-border);
+      margin: 4px 0;
+    }
+
+    /* Code snippet inside the browser */
+    .error-snippet {
+      width: 100%;
+      border-radius: 8px;
+      background: rgba(0,0,0,0.30);
+      border: 1px solid rgba(255,255,255,0.06);
+      padding: 14px 16px;
+      text-align: left;
+      font-family: ui-monospace, monospace;
+      font-size: 12px;
+      line-height: 1.7;
+      color: var(--ck-muted);
+    }
+
+    .snippet-comment { color: #555a70; }
+    .snippet-key     { color: #784bff; }
+    .snippet-val     { color: #26d7f4; }
+    .snippet-num     { color: #ffbd2e; }
+
+    /* ── CTA buttons ── */
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 28px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 10px 22px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: transform .15s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease;
+    }
+
+    .btn:active { transform: scale(0.97); }
+
+    .btn--primary {
+      background: linear-gradient(135deg, #784bff 0%, #5c35d4 100%);
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(120,75,255,0.35);
+    }
+
+    .btn--primary:hover {
+      box-shadow: 0 6px 30px rgba(120,75,255,0.55);
+      transform: translateY(-1px);
+    }
+
+    .btn--secondary {
+      background: var(--ck-surface);
+      border-color: var(--ck-border);
+      color: var(--ck-muted);
+    }
+
+    .btn--secondary:hover {
+      border-color: var(--ck-border-hover);
+      color: var(--ck-text);
+      background: var(--ck-accent-soft);
+    }
+
+    /* ── Subtitle below browser ── */
+    .page-subtitle {
+      margin-top: 28px;
+      font-size: 13px;
+      color: #555a70;
+    }
+
+    .page-subtitle a {
+      color: #c9adff;
+      text-decoration: none;
+    }
+
+    .page-subtitle a:hover { text-decoration: underline; }
+
+    /* ── Glow orbs behind the card ── */
+    .glow-orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: 0;
+      animation: orbPulse 7s ease-in-out infinite;
+    }
+
+    .glow-orb--purple {
+      width: 420px; height: 420px;
+      background: rgba(120,75,255,0.13);
+      top: 10%; left: 5%;
+    }
+
+    .glow-orb--cyan {
+      width: 340px; height: 340px;
+      background: rgba(38,215,244,0.09);
+      bottom: 8%; right: 6%;
+      animation-delay: -3.5s;
+    }
+
+    @keyframes orbPulse {
+      0%, 100% { transform: scale(1); opacity: 0.8; }
+      50%       { transform: scale(1.12); opacity: 1; }
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 480px) {
+      .browser-body { padding: 28px 20px 32px; }
+      .cta-row { flex-direction: column; align-items: center; }
+      .btn { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background glow orbs -->
+  <div class="glow-orb glow-orb--purple" aria-hidden="true"></div>
+  <div class="glow-orb glow-orb--cyan"   aria-hidden="true"></div>
+
+  <!-- Starfield -->
+  <div class="stars" id="stars" aria-hidden="true"></div>
+
+  <!-- Navbar -->
+  <nav class="ck-nav" aria-label="Site navigation">
+    <a class="ck-nav__logo" href="/">
+      <span class="ck-nav__logo-icon">⚡</span>
+      CodeKaro
+    </a>
+    <div class="ck-nav__spacer"></div>
+    <a class="ck-nav__back" href="/" aria-label="Go back to home">
+      ← Home
+    </a>
+  </nav>
+
+  <!-- Main content -->
+  <main>
+    <!-- Browser window illustration -->
+    <div class="browser-window" role="img" aria-label="Browser showing a 404 error">
+      <!-- Browser chrome -->
+      <div class="browser-bar">
+        <div class="browser-dots" aria-hidden="true">
+          <span class="browser-dot browser-dot--red"></span>
+          <span class="browser-dot browser-dot--yellow"></span>
+          <span class="browser-dot browser-dot--green"></span>
+        </div>
+        <div class="browser-url">
+          <span class="browser-url__lock">🔒</span>
+          <span class="browser-url__text" id="current-url">codekaro.dev/???</span>
+        </div>
+      </div>
+
+      <!-- Browser body -->
+      <div class="browser-body">
+        <div class="error-emoji" aria-hidden="true">🤔</div>
+        <div class="error-code" aria-label="Error 404">404</div>
+        <div class="error-title">Page Not Found</div>
+        <p class="error-desc">
+          Looks like this page wandered off into the void.<br>
+          Even the best coders hit a dead end sometimes.
+        </p>
+
+        <div class="browser-divider"></div>
+
+        <!-- Inline "console" snippet for a dev-y vibe -->
+        <div class="error-snippet" aria-label="Console output">
+          <div><span class="snippet-comment">// Debugging your request…</span></div>
+          <div><span class="snippet-key">GET</span>  <span class="snippet-val" id="snippet-url">/???</span></div>
+          <div><span class="snippet-key">Status</span>  <span class="snippet-num">404</span>  <span class="snippet-comment">Not Found</span></div>
+          <div><span class="snippet-comment">// Hint: check the URL and try again 🙂</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA buttons -->
+    <div class="cta-row">
+      <a class="btn btn--primary" href="/">
+        🏠 Go Home
+      </a>
+      <a class="btn btn--secondary" href="/problems.html">
+        📚 Browse Problems
+      </a>
+      <button class="btn btn--secondary" onclick="history.back()">
+        ← Go Back
+      </button>
+    </div>
+
+    <p class="page-subtitle">
+      Lost? Try the <a href="/">homepage</a> or
+      <a href="/problems.html">problems list</a>.
+    </p>
+  </main>
+
+  <script>
+    // ── Fill in the actual URL that was attempted ──────────────────────────
+    (function () {
+      const path = window.location.pathname + window.location.search;
+      const urlEl     = document.getElementById('current-url');
+      const snippetEl = document.getElementById('snippet-url');
+      if (urlEl)     urlEl.textContent     = 'codekaro.dev' + path;
+      if (snippetEl) snippetEl.textContent = path;
+    })();
+
+    // ── Generate random starfield ──────────────────────────────────────────
+    (function () {
+      const container = document.getElementById('stars');
+      if (!container) return;
+      const count = 120;
+      for (let i = 0; i < count; i++) {
+        const star = document.createElement('span');
+        star.className = 'star';
+        const size = Math.random() * 2 + 0.5;
+        star.style.cssText = [
+          `width:${size}px`,
+          `height:${size}px`,
+          `top:${Math.random() * 100}%`,
+          `left:${Math.random() * 100}%`,
+          `--dur:${(Math.random() * 4 + 2).toFixed(1)}s`,
+          `--delay:-${(Math.random() * 6).toFixed(1)}s`,
+          `--max-op:${(Math.random() * 0.5 + 0.2).toFixed(2)}`,
+        ].join(';');
+        container.appendChild(star);
+      }
+    })();
+  </script>
+</body>
+</html>
+

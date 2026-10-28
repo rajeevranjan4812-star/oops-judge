@@ -334,19 +334,27 @@
       }
     });
 
-    let accuracyPct = 84.6; // baseline judge standard
-    if (totalSubmissions > 0) {
-      accuracyPct = Math.round((passedSubmissions / totalSubmissions) * 1000) / 10;
+    if (statAccuracyVal) {
+      if (totalSubmissions > 0) {
+        const accuracyPct = Math.round((passedSubmissions / totalSubmissions) * 1000) / 10;
+        statAccuracyVal.textContent = `${accuracyPct}%`;
+      } else {
+        statAccuracyVal.textContent = "—";
+      }
     }
-    if (statAccuracyVal) statAccuracyVal.textContent = `${accuracyPct}%`;
   }
 
   function calculateStreak() {
     const uid = getUserId();
     const daysSet = new Set();
+    const prefixSub = `oops_sub:${uid}:`;
+    const prefixAttempt = `oops_attempt_time:${uid}:`;
+
     for (let i = 0; i < localStorage.length; i++) {
       const key = localStorage.key(i);
-      if (key && key.startsWith(`oops_attempt_time:${uid}:`)) {
+      if (!key) continue;
+
+      if (key.startsWith(prefixAttempt)) {
         const dateStr = localStorage.getItem(key);
         if (dateStr) {
           try {
@@ -356,16 +364,30 @@
             // ignore
           }
         }
+      } else if (key.startsWith(prefixSub)) {
+        try {
+          const subs = JSON.parse(localStorage.getItem(key) || "[]");
+          if (Array.isArray(subs)) {
+            subs.forEach(s => {
+              if (s && s.time) {
+                const day = new Date(s.time).toISOString().slice(0, 10);
+                daysSet.add(day);
+              }
+            });
+          }
+        } catch {
+          // ignore
+        }
       }
     }
-    if (daysSet.size === 0) return 3; // Friendly default streak incentive
 
-    const sortedDays = Array.from(daysSet).sort().reverse();
+    if (daysSet.size === 0) return 0;
+
     const today = new Date().toISOString().slice(0, 10);
     const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
 
     if (!daysSet.has(today) && !daysSet.has(yesterday)) {
-      return 1;
+      return 0;
     }
 
     let streak = 0;
@@ -379,7 +401,7 @@
         break;
       }
     }
-    return Math.max(streak, 1);
+    return streak;
   }
 
   // -----------------------------------------------------------------

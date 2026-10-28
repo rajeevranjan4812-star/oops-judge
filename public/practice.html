@@ -32,7 +32,6 @@
         <button id="next-problem-btn" class="topbar-icon-btn" title="Next problem" disabled aria-label="Next problem">›</button>
         <button id="random-problem-btn" class="topbar-icon-btn" title="Pick random problem" aria-label="Pick random problem">🔀</button>
       </div>
-      <div class="topbar-credits">Made By Shubham and  Rajeev</div>
     </div>
 
     <div class="topbar-center">
@@ -153,10 +152,19 @@
       </div>
       <div class="list-label">ALL PROBLEMS <span id="visible-count"></span></div>
     </div>
-    <nav id="problem-list" class="problem-list" aria-label="Problems"></nav>
-    <div class="drawer-footer">
-      <span class="footer-icon">⌘</span>
-      <div><strong>Java 11+</strong><span>Local compiler</span></div>
+    <!-- Drawer Body -->
+    <div class="drawer-body">
+      <nav id="problem-list" class="problem-list drawer-view active" aria-label="Problems"></nav>
+      <div id="paths-list" class="paths-list drawer-view" aria-label="Learning Paths" hidden></div>
+      <div id="collections-list" class="collections-list drawer-view" aria-label="Collections" hidden></div>
+    </div>
+
+    <div class="drawer-footer" style="display:flex;align-items:center;justify-content:space-between;">
+      <div style="display:flex;align-items:center;gap:8px;">
+        <span class="footer-icon">⌘</span>
+        <div><strong>Java 11+</strong><span>Local compiler</span></div>
+      </div>
+      <div style="font-size:11px;color:var(--text-muted);white-space:nowrap;">Made with pride by Shubham &amp; Rajeev</div>
     </div>
   </aside>
 

@@ -26,11 +26,12 @@
       --cell-size: 12px;
       --cell-gap: 3px;
       --cell-step: 15px;
-      --chart-scale-01: #25262d;
-      --chart-scale-02: #3a3b43;
-      --chart-scale-03: #555761;
-      --chart-scale-04: #737680;
-      --chart-scale-05: #aeb1ba;
+      --chart-scale-01: #1a1726;
+      --chart-scale-02: #38246e;
+      --chart-scale-03: #5833a6;
+      --chart-scale-04: #784bff;
+      --chart-scale-05: #26d7f4;
+      --chart-cell-border: rgba(220, 229, 247, .06);
       background: var(--page-bg);
       color: #e4e4e8;
     }
@@ -42,11 +43,12 @@
       --page-surface-raised: #ebebee;
       --page-border: rgba(32, 33, 38, .14);
       --page-muted: #696b74;
-      --chart-scale-01: #e5e5e8;
-      --chart-scale-02: #cbccd1;
-      --chart-scale-03: #aaacb4;
-      --chart-scale-04: #888a92;
-      --chart-scale-05: #64666e;
+      --chart-scale-01: #e9e6f2;
+      --chart-scale-02: #c4b3ef;
+      --chart-scale-03: #9b7de6;
+      --chart-scale-04: #7345db;
+      --chart-scale-05: #0e9fba;
+      --chart-cell-border: rgba(32, 33, 38, .12);
       color: #202126;
     }
 
@@ -155,7 +157,7 @@
     .cell {
       width: var(--cell-size);
       height: var(--cell-size);
-      border: 1px solid rgba(220, 229, 247, .04);
+      border: 1px solid var(--chart-cell-border, rgba(220, 229, 247, .06));
       border-radius: 2px;
       background: var(--chart-scale-01);
     }
@@ -255,7 +257,13 @@
       <div class="legend" aria-label="Submission levels">
         <span>Less</span><span class="cell" aria-hidden="true"></span><span class="cell" data-level="1" aria-hidden="true"></span><span class="cell" data-level="2" aria-hidden="true"></span><span class="cell" data-level="3" aria-hidden="true"></span><span class="cell" data-level="4" aria-hidden="true"></span><span>More</span>
       </div>
-      <div id="empty-state" class="empty-state" hidden>Sign in and submit solutions in Practice to build your activity heatmap.</div>
+      <div id="empty-state" class="empty-state" hidden>
+        <p style="margin:0 0 14px;">Sign in and submit solutions in Practice to build your activity heatmap.</p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <a href="/auth" style="display:inline-flex;align-items:center;padding:7px 14px;border-radius:6px;background:var(--page-surface-raised);border:1px solid var(--border);font-weight:600;font-size:12.5px;text-decoration:none;">Sign In</a>
+          <a href="/practice" style="display:inline-flex;align-items:center;padding:7px 14px;border-radius:6px;background:var(--page-surface-raised);border:1px solid var(--border);font-weight:600;font-size:12.5px;text-decoration:none;">Start Practice ➔</a>
+        </div>
+      </div>
     </section>
   </main>
   <script src="/gooey-nav.js" defer></script>

@@ -242,6 +242,54 @@ class AppHandler(BaseHTTPRequestHandler):
             "/app.css": ("app.css", "text/css; charset=utf-8"),
             "/app.js": ("app.js", "text/javascript; charset=utf-8"),
             "/config.js": ("config.js", "text/javascript; charset=utf-8"),
+            "/tokens.css": ("tokens.css", "text/css; charset=utf-8"),
+            "/404": ("404.html", "text/html; charset=utf-8"),
+            "/404.html": ("404.html", "text/html; charset=utf-8"),
+        }
+        if norm_path in static_files:
+            filename, content_type = static_files[norm_path]
+            target = WEB / filename
+
+            if not target.is_file():
+                target = ROOT / "public" / filename
+        else:
+            rel_path = norm_path.lstrip("/")
+            web_root = WEB.resolve()
+            file_candidate = (web_root / rel_path).resolve()
+
+            if (
+                file_candidate.is_file()
+                and file_candidate.is_relative_to(web_root)
+            ):
+                target = file_candidate
+                ext = file_candidate.suffix.lower()
+
+                mime_types = {
+                    ".html": "text/html; charset=utf-8",
+                    ".css": "text/css; charset=utf-8",
+                    ".js": "text/javascript; charset=utf-8",
+                    ".json": "application/json; charset=utf-8",
+                    ".jpg": "image/jpeg",
+                    ".jpeg": "image/jpeg",
+                    ".png": "image/png",
+                    ".webp": "image/webp",
+                    ".svg": "image/svg+xml",
+                    ".woff2": "font/woff2",
+                }
+
+                content_type = mime_types.get(
+                    ext, "application/octet-stream"
+                )
+            else:
+                page_404 = WEB / "404.html"
+                if not page_404.is_file():
+                    page_404 = ROOT / "public" / "404.html"
+                try:
+                    body_404 = page_404.read_bytes()
+                    self.send_bytes(404, body_404, "text/html; charset=utf-8")
+                except OSError:
+                    self.send_json(404, {"error": "Page not found."})
+                return
             "/assets/index.js": ("assets/index.js", "application/javascript; charset=utf-8"),
             "/assets/index.css": ("assets/index.css", "text/css; charset=utf-8"),
         }

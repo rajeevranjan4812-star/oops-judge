@@ -1,0 +1,143 @@
+/**
+ * CodeKaro — Unified Design System Tokens
+ * Source of truth for themes, colors, typography, elevations, and radii.
+ */
+
+:root {
+  color-scheme: dark;
+
+  /* Typography Stacks */
+  --ck-font-display: "Audiowide", system-ui, sans-serif;
+  --ck-font-sans: "Inter", "Play", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --ck-font-mono: "JetBrains Mono", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+
+  /* Backgrounds & Surfaces (Dark) */
+  --ck-bg: #120f17;
+  --ck-bg-subtle: #101014;
+  --ck-surface: #16131f;
+  --ck-surface-raised: #1e1b29;
+  --ck-surface-hover: #262334;
+  --ck-surface-active: #2f2b40;
+  --ck-surface-glass: rgba(22, 19, 31, 0.82);
+
+  /* Borders */
+  --ck-border: rgba(220, 229, 247, 0.10);
+  --ck-border-subtle: rgba(220, 229, 247, 0.06);
+  --ck-border-strong: rgba(220, 229, 247, 0.22);
+  --ck-border-hover: rgba(180, 155, 255, 0.45);
+  --ck-border-focus: rgba(120, 75, 255, 0.65);
+
+  /* Typography Colors */
+  --ck-text: #f4f4f6;
+  --ck-text-secondary: #c7c8d0;
+  --ck-text-muted: #8e8e9e;
+  --ck-text-faint: #5a5c66;
+  --ck-text-inverse: #101014;
+
+  /* Brand Accents */
+  --ck-accent: #784bff;
+  --ck-accent-hover: #8f66ff;
+  --ck-accent-secondary: #26d7f4;
+  --ck-accent-glow: rgba(120, 75, 255, 0.25);
+  --ck-accent-soft: rgba(120, 75, 255, 0.10);
+  --ck-accent-2-soft: rgba(38, 215, 244, 0.10);
+
+  /* Semantic Feedback */
+  --ck-success: #78b99a;
+  --ck-success-soft: rgba(120, 185, 154, 0.12);
+  --ck-warning: #d9bf71;
+  --ck-warning-soft: rgba(217, 191, 113, 0.12);
+  --ck-danger: #d9878e;
+  --ck-danger-soft: rgba(217, 135, 142, 0.12);
+
+  /* Difficulty Accents */
+  --ck-diff-easy: #78b99a;
+  --ck-diff-easy-bg: rgba(120, 185, 154, 0.12);
+  --ck-diff-med: #d9bf71;
+  --ck-diff-med-bg: rgba(217, 191, 113, 0.12);
+  --ck-diff-hard: #d9878e;
+  --ck-diff-hard-bg: rgba(217, 135, 142, 0.12);
+
+  /* Navigation */
+  --ck-nav-bg: rgba(18, 15, 23, 0.85);
+  --ck-nav-border: rgba(220, 229, 247, 0.08);
+
+  /* Corner Radii */
+  --ck-radius-xs: 4px;
+  --ck-radius-sm: 6px;
+  --ck-radius-md: 10px;
+  --ck-radius-lg: 16px;
+  --ck-radius-xl: 22px;
+  --ck-radius-pill: 9999px;
+
+  /* Shadows */
+  --ck-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.25);
+  --ck-shadow-md: 0 8px 24px rgba(0, 0, 0, 0.35);
+  --ck-shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.45);
+  --ck-shadow-glow: 0 0 32px var(--ck-accent-glow);
+}
+
+/* ══════════════════════════════════════════════════════
+   Light Mode Overrides
+   ══════════════════════════════════════════════════════ */
+:root[data-theme="light"],
+html[data-theme="light"] {
+  color-scheme: light;
+
+  /* Backgrounds & Surfaces (Light) */
+  --ck-bg: #f1f1f3;
+  --ck-bg-subtle: #eae9ee;
+  --ck-surface: #ffffff;
+  --ck-surface-raised: #f7f7f9;
+  --ck-surface-hover: #ebebee;
+  --ck-surface-active: #e2e2e6;
+  --ck-surface-glass: rgba(255, 255, 255, 0.86);
+
+  /* Borders */
+  --ck-border: rgba(32, 33, 38, 0.14);
+  --ck-border-subtle: rgba(32, 33, 38, 0.08);
+  --ck-border-strong: rgba(32, 33, 38, 0.28);
+  --ck-border-hover: rgba(104, 68, 174, 0.45);
+  --ck-border-focus: rgba(104, 68, 174, 0.60);
+
+  /* Typography Colors */
+  --ck-text: #202126;
+  --ck-text-secondary: #484a54;
+  --ck-text-muted: #696b74;
+  --ck-text-faint: #989aa2;
+  --ck-text-inverse: #f4f4f6;
+
+  /* Brand Accents */
+  --ck-accent: #6a3ecf;
+  --ck-accent-hover: #5830b5;
+  --ck-accent-secondary: #0e9fba;
+  --ck-accent-glow: rgba(106, 62, 207, 0.18);
+  --ck-accent-soft: rgba(106, 62, 207, 0.08);
+  --ck-accent-2-soft: rgba(14, 159, 186, 0.08);
+
+  /* Semantic Feedback */
+  --ck-success: #207a5e;
+  --ck-success-soft: rgba(32, 122, 94, 0.10);
+  --ck-warning: #9e7a1b;
+  --ck-warning-soft: rgba(158, 122, 27, 0.10);
+  --ck-danger: #b33942;
+  --ck-danger-soft: rgba(179, 57, 66, 0.10);
+
+  /* Difficulty Accents */
+  --ck-diff-easy: #207a5e;
+  --ck-diff-easy-bg: rgba(32, 122, 94, 0.10);
+  --ck-diff-med: #9e7a1b;
+  --ck-diff-med-bg: rgba(158, 122, 27, 0.10);
+  --ck-diff-hard: #b33942;
+  --ck-diff-hard-bg: rgba(179, 57, 66, 0.10);
+
+  /* Navigation */
+  --ck-nav-bg: rgba(241, 241, 243, 0.90);
+  --ck-nav-border: rgba(32, 33, 38, 0.10);
+
+  /* Shadows */
+  --ck-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --ck-shadow-md: 0 8px 24px rgba(0, 0, 0, 0.09);
+  --ck-shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.12);
+  --ck-shadow-glow: 0 0 24px var(--ck-accent-glow);
+}

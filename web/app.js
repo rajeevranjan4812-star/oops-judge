@@ -1588,6 +1588,58 @@ function renderHintsDrawer(hints, count) {
   if (nextBtn) {
     nextBtn.addEventListener("click", () => {
       renderHintsDrawer(currentProblemHints, revealedHintsCount + 1);
+      renderHintsTab();
+    });
+  }
+}
+
+function renderHintsTab() {
+  const container = document.querySelector("#tab-content-hints");
+  if (!container) return;
+  const hints = currentProblemHints || [];
+  if (hints.length === 0) {
+    container.innerHTML = `
+      <div class="placeholder-tab-pane">
+        <div class="placeholder-icon">💡</div>
+        <h3>No Hints Needed</h3>
+        <p>Review the problem constraints, input format, and test case edge cases carefully. Use standard Java OOP principles and handle boundary conditions.</p>
+      </div>
+    `;
+    return;
+  }
+  const count = Math.max(1, revealedHintsCount || 1);
+  const visible = hints.slice(0, count);
+  let html = `
+    <div style="padding: 20px; display: flex; flex-direction: column; gap: 14px;">
+      <div style="display: flex; align-items: center; justify-content: space-between;">
+        <span style="font-size: 13px; font-weight: 600; color: var(--text-primary);">💡 Problem Hints</span>
+        <span style="font-size: 11px; color: var(--text-muted);">${visible.length} of ${hints.length} revealed</span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+        ${visible.map((h, i) => `
+          <div class="hint-item">
+            <span class="hint-badge">Hint ${i + 1}</span>
+            <span class="hint-text">${inlineMarkdown(h)}</span>
+          </div>
+        `).join("")}
+      </div>
+  `;
+  if (count < hints.length) {
+    html += `
+      <button type="button" id="tab-reveal-next-hint-btn" class="hint-reveal-btn" style="margin-top: 6px;">
+        💡 Reveal Next Hint (${count + 1}/${hints.length})
+      </button>
+    `;
+  }
+  html += `</div>`;
+  container.innerHTML = html;
+
+  const btn = container.querySelector("#tab-reveal-next-hint-btn");
+  if (btn) {
+    btn.addEventListener("click", () => {
+      revealedHintsCount = count + 1;
+      renderHintsDrawer(hints, revealedHintsCount);
+      renderHintsTab();
     });
   }
 }
@@ -1670,6 +1722,8 @@ function initLeftTabs() {
       });
       if (target === "submissions") {
         renderSubmissionsTab();
+      } else if (target === "hints") {
+        renderHintsTab();
       }
     });
   });
