@@ -642,7 +642,7 @@ function initMonaco() {
           monacoEditor = monaco.editor.create(monacoContainer, {
             value: "",
             language: "java",
-            theme: document.documentElement.dataset.theme === "light" ? "code-karo-light" : "code-karo-dark",
+            theme: currentEditorTheme,
             automaticLayout: true,
             tabSize: 4,
             insertSpaces: true,
@@ -813,6 +813,25 @@ function setFontSize(newSize) {
   }
   if (editor) editor.style.fontSize = `${currentFontSize}px`;
   if (lineNumbers) lineNumbers.style.fontSize = `${currentFontSize}px`;
+}
+
+let currentEditorTheme = localStorage.getItem("oops_editor_theme") || "code-karo-dark";
+
+function setEditorTheme(themeName) {
+  currentEditorTheme = themeName;
+  localStorage.setItem("oops_editor_theme", themeName);
+  if (isMonacoReady && monacoEditor) {
+    monaco.editor.setTheme(themeName);
+  }
+  const iconSpan = document.querySelector("#editor-theme-icon");
+  const labelSpan = document.querySelector("#editor-theme-label");
+  if (themeName === "code-karo-dark") {
+    if (iconSpan) iconSpan.textContent = "🌙";
+    if (labelSpan) labelSpan.textContent = "Dark";
+  } else {
+    if (iconSpan) iconSpan.textContent = "☀️";
+    if (labelSpan) labelSpan.textContent = "Light";
+  }
 }
 
 // Global helper exports as requested
@@ -2453,6 +2472,13 @@ if (submitButton) submitButton.addEventListener("click", () => executeCode("subm
 if (resetButton) resetButton.addEventListener("click", resetSolution);
 if (fontDecreaseButton) fontDecreaseButton.addEventListener("click", () => setFontSize(currentFontSize - 1));
 if (fontIncreaseButton) fontIncreaseButton.addEventListener("click", () => setFontSize(currentFontSize + 1));
+const editorThemeBtn = document.querySelector("#editor-theme-btn");
+if (editorThemeBtn) {
+  editorThemeBtn.addEventListener("click", () => {
+    const nextTheme = currentEditorTheme === "code-karo-dark" ? "code-karo-light" : "code-karo-dark";
+    setEditorTheme(nextTheme);
+  });
+}
 const refreshBtn = document.querySelector("#refresh-button");
 if (refreshBtn) refreshBtn.addEventListener("click", loadProblems);
 
@@ -3116,6 +3142,7 @@ function initAuth() {
 }
 
 setFontSize(currentFontSize);
+setEditorTheme(currentEditorTheme);
 initLeftTabs();
 initConsoleTabs();
 initMobileTabs();

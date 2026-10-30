@@ -80,7 +80,7 @@
       position: absolute;
       z-index: 0;
       inset: 0;
-      background: url("/hero-gradient.jpg") center 42% / cover no-repeat;
+      background: url("./hero-gradient.jpg") center 42% / cover no-repeat, url("hero-gradient.jpg") center 42% / cover no-repeat, url("/hero-gradient.jpg") center 42% / cover no-repeat, linear-gradient(135deg, #120f17 0%, #1f1430 50%, #0c0a0f 100%);
       content: "";
       opacity: .42;
       pointer-events: none;
@@ -1313,8 +1313,9 @@
   <main class="hero">
     <canvas class="gradient-ascii-canvas" aria-hidden="true"></canvas>
     <header class="navbar" style="position: absolute; top: 0; left: 0; right: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; min-height: 76px; padding: 0 clamp(22px, 6vw, 88px); border-bottom: 1px solid rgba(220, 229, 247, .06);">
-      <a class="nav-island__brand" href="/" aria-label="CodeKaro home" style="font-family: 'Lexend Giga', sans-serif; font-size: 16px; font-weight: 700; text-decoration: none; color: inherit;">CodeKaro</a>
-      <div style="display: flex; align-items: center; gap: 12px;">
+      <div style="width: 40px;"></div>
+      <a class="nav-island__brand" href="/" aria-label="CodeKaro home" style="font-family: 'Lexend Giga', sans-serif; font-size: 16px; font-weight: 700; text-decoration: none; color: inherit; position: absolute; left: 50%; transform: translateX(-50%);">CodeKaro</a>
+      <div style="display: flex; align-items: center; gap: 12px; margin-left: auto;">
         <button class="theme-switch theme-switch--compact" data-theme-switch type="button" aria-label="Switch theme" aria-pressed="false" style="position: static;">
           <svg class="theme-switch__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <g class="theme-switch__sun-rays" stroke="currentColor" stroke-linecap="round" stroke-width="1.7">
@@ -1702,7 +1703,7 @@
   </script>
   <div id="stagger-testimonials-root" style="width: 100%; overflow: hidden;"></div>
   <footer class="site-footer" aria-label="Code-Karo.dev footer">
-    <img class="site-footer__art" src="/footer-gradient.jpg" alt="" aria-hidden="true">
+    <img class="site-footer__art" src="./footer-gradient.jpg" onerror="this.src='/footer-gradient.jpg'" alt="" aria-hidden="true">
     <div class="footer-jobs">
       <span class="footer-tag">ready to practice?</span>
       <span class="footer-headline footer-job-title">write Java.<br>run real tests.</span>

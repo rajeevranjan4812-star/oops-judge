@@ -78,7 +78,7 @@
       position: absolute;
       z-index: 0;
       inset: 0;
-      background: url("/hero-gradient.jpg") center 42% / cover no-repeat;
+      background: url("./hero-gradient.jpg") center 42% / cover no-repeat, url("hero-gradient.jpg") center 42% / cover no-repeat, url("/hero-gradient.jpg") center 42% / cover no-repeat, linear-gradient(135deg, #120f17 0%, #1f1430 50%, #0c0a0f 100%);
       content: "";
       opacity: .42;
       pointer-events: none;
@@ -1475,7 +1475,7 @@
   </main>
 
   <footer class="site-footer" aria-label="Code-Karo.dev footer">
-    <img class="site-footer__art" src="/footer-gradient.jpg" alt="" aria-hidden="true">
+    <img class="site-footer__art" src="./footer-gradient.jpg" onerror="this.src='/footer-gradient.jpg'" alt="" aria-hidden="true">
     <div class="footer-jobs">
       <span class="footer-tag">ready to practice?</span>
       <span class="footer-headline footer-job-title">write Java.<br>run real tests.</span>
