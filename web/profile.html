@@ -513,7 +513,11 @@
       }
     }
   </style>
-  <script type="module" src="/src/dashboard-skyline.tsx"></script>
+  <script type="module">
+    import('./assets/dashboard-skyline.js')
+      .catch(() => import('/assets/dashboard-skyline.js'))
+      .catch(() => import('/src/dashboard-skyline.tsx'));
+  </script>
 </head>
 <body>
   <!-- Top Sticky Navigation -->

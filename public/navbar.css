@@ -120,3 +120,97 @@
     transition: none;
   }
 }
+
+/* Mobile Hamburger Dropdown & Nav Island Responsive Visibility */
+.navbar-hamburger-wrapper {
+  display: none !important;
+  position: relative;
+}
+
+.hamburger-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 7px;
+  cursor: pointer;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 38px;
+  height: 38px;
+}
+
+:root[data-theme="light"] .hamburger-btn {
+  border-color: rgba(0, 0, 0, 0.18);
+  color: #09090b;
+}
+
+.hamburger-btn span {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: currentColor;
+  border-radius: 2px;
+}
+
+.hamburger-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  min-width: 220px;
+  background: #0a0a0c;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 12px;
+  padding: 8px;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-4px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  z-index: 100;
+}
+
+:root[data-theme="light"] .hamburger-dropdown {
+  background: #ffffff;
+  border-color: rgba(0, 0, 0, 0.14);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.12);
+}
+
+.hamburger-dropdown a {
+  display: block;
+  padding: 10px 14px;
+  color: #f4f4f6;
+  text-decoration: none;
+  font-size: 14px;
+  border-radius: 8px;
+}
+
+:root[data-theme="light"] .hamburger-dropdown a {
+  color: #202126;
+}
+
+.hamburger-dropdown a:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+:root[data-theme="light"] .hamburger-dropdown a:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.navbar-hamburger-wrapper[data-open="true"] .hamburger-dropdown,
+.navbar-hamburger-wrapper:focus-within .hamburger-dropdown {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  .navbar-hamburger-wrapper {
+    display: inline-flex !important;
+  }
+  .navbar .nav-island {
+    display: none !important;
+  }
+}
+

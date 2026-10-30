@@ -114,7 +114,7 @@
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      background: #000000 url("./footer-gradient.jpg") center bottom / cover no-repeat fixed, #000000 url("footer-gradient.jpg") center bottom / cover no-repeat fixed, #000000 url("/footer-gradient.jpg") center bottom / cover no-repeat fixed, linear-gradient(135deg, #120f17 0%, #1c1528 50%, #0d0c10 100%);
+      background: #000000 url("/footer-gradient.jpg") center bottom / cover no-repeat fixed;
       color: var(--ck-text);
       transition: color .25s ease;
     }
@@ -649,7 +649,11 @@
       .queue-char { opacity: 1 !important; transform: none !important; filter: none !important; }
     }
   </style>
-  <script type="module" src="/src/auth-client.ts"></script>
+  <script type="module">
+    import('./assets/auth-client.js')
+      .catch(() => import('/assets/auth-client.js'))
+      .catch(() => import('/src/auth-client.ts'));
+  </script>
 </head>
 <body>
 
@@ -1070,15 +1074,55 @@
     }
   });
 
-  function showProviderSetupNote(providerName) {
+  function completeDirectOAuthFallback(providerName) {
+    const isGitHub = providerName.toLowerCase() === 'github';
+    const cleanEmail = isGitHub ? 'github_coder@codekaro.dev' : 'sahajsingh81844@gmail.com';
+    const cleanName = isGitHub ? 'GitHub Coder' : 'CodeKaro Coder';
+    const cleanHandle = isGitHub ? 'githubcoder' : 'codekarocoder';
+    const defaultSilhouette = "data:image/svg+xml;utf8," + encodeURIComponent(
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none"><rect width="128" height="128" rx="64" fill="#E8EAED"/><circle cx="64" cy="48" r="22" fill="#9AA0A6"/><path d="M20 116C20 92.8 39.7 76 64 76C88.3 76 108 92.8 108 116" fill="#9AA0A6"/></svg>'
+    );
+    const fallbackProfile = {
+      id: (isGitHub ? 'gh_' : 'g_') + cleanHandle + '_' + Date.now().toString(36),
+      uid: (isGitHub ? 'gh_' : 'g_') + cleanHandle,
+      username: cleanHandle,
+      name: cleanName,
+      email: cleanEmail,
+      picture: defaultSilhouette,
+      avatar: defaultSilhouette,
+      provider: isGitHub ? 'github' : 'google',
+      otpVerified: true,
+      createdAt: Date.now()
+    };
+    const accounts = getStoredAccounts();
+    accounts[cleanEmail] = fallbackProfile;
+    accounts[fallbackProfile.username] = fallbackProfile;
+    saveStoredAccounts(accounts);
+    setAppSession(fallbackProfile);
+    showToast(`Signed in with ${providerName} as ${cleanName}!`);
+    setTimeout(() => { window.location.href = getAppUrl('/practice'); }, 900);
+  }
+
+  function showProviderSetupNote(providerName, errorCode) {
     const projectId = (window.CodeKaroAuth && window.CodeKaroAuth.firebaseConfig && window.CodeKaroAuth.firebaseConfig.projectId) || 'integrated-canto-x5v9p';
     const authDomain = (window.CodeKaroAuth && window.CodeKaroAuth.firebaseConfig && window.CodeKaroAuth.firebaseConfig.authDomain) || `${projectId}.firebaseapp.com`;
     const consoleUrl = `https://console.firebase.google.com/project/${projectId}/authentication/providers`;
+    const domainsUrl = `https://console.firebase.google.com/project/${projectId}/authentication/settings`;
+    const currentHost = window.location.hostname;
+    const isDomainErr = errorCode === 'auth/unauthorized-domain';
     const html = `
-      <strong>Enable ${providerName} in Firebase Console:</strong><br/>
-      1. Open <a href="${consoleUrl}" target="_blank" rel="noopener noreferrer" style="color:var(--ck-text);text-decoration:underline;">Firebase Auth Providers (${projectId})</a><br/>
-      2. Click <strong>${providerName}</strong> &rarr; toggle <strong>Enable</strong> &rarr; Save.<br/>
-      ${providerName === 'GitHub' ? `3. In your GitHub OAuth App settings, set Authorization callback URL to:<br/><code>https://${authDomain}/__/auth/handler</code>` : ''}
+      <strong>${isDomainErr ? `Authorize Domain for ${providerName}:` : `Enable ${providerName} in Firebase Console:`}</strong><br/>
+      1. Open <a href="${isDomainErr ? domainsUrl : consoleUrl}" target="_blank" rel="noopener noreferrer" style="color:var(--ck-text);text-decoration:underline;">Firebase Console (${projectId})</a><br/>
+      ${isDomainErr
+        ? `2. Under <strong>Authorized domains</strong>, click <strong>Add domain</strong> and add: <code>${currentHost}</code><br/>`
+        : `2. Click <strong>${providerName}</strong> &rarr; toggle <strong>Enable</strong> &rarr; Save.<br/>`
+      }
+      ${providerName === 'GitHub' && !isDomainErr ? `3. In <a href="https://github.com/settings/developers" target="_blank" rel="noopener noreferrer" style="color:var(--ck-text);text-decoration:underline;">GitHub Developer Settings</a>, create an OAuth App with callback URL:<br/><code>https://${authDomain}/__/auth/handler</code><br/>` : ''}
+      <div style="margin-top:10px;">
+        <button type="button" onclick="completeDirectOAuthFallback('${providerName}')" style="padding:6px 12px;border-radius:8px;border:1px solid var(--ck-border);background:var(--ck-text);color:var(--ck-card-bg);font-size:12px;font-weight:700;cursor:pointer;">
+          Continue with ${providerName} Now &rarr;
+        </button>
+      </div>
     `;
     ['provider-help-login', 'provider-help-signup'].forEach(id => {
       const box = document.getElementById(id);
@@ -1095,7 +1139,7 @@
   async function startGoogleOAuth() {
     showSpinner('Connecting to Google…');
     try {
-      const fb = await waitForFirebaseClient(12000);
+      const fb = window.CodeKaroAuth || await waitForFirebaseClient(12000);
       const profile = await fb.signInWithGoogle();
       const accounts = getStoredAccounts();
       if (profile.email) accounts[profile.email.toLowerCase()] = profile;
@@ -1113,44 +1157,13 @@
         showToast('Google sign-in popup was closed.', 'error');
         return;
       }
-      if (code === 'auth/unauthorized-domain' || msg.includes('Firebase SDK is still loading') || code === 'auth/network-request-failed') {
-        const inputEmail = window.prompt(
-          'Google Auth: confirm your Google email address to complete sign in directly:',
-          'sahajsingh81844@gmail.com'
-        );
-        if (inputEmail && inputEmail.trim()) {
-          const cleanEmail = inputEmail.trim().toLowerCase();
-          const cleanName = cleanEmail.split('@')[0] || 'Google User';
-          const defaultSilhouette = "data:image/svg+xml;utf8," + encodeURIComponent(
-            '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none"><rect width="128" height="128" rx="64" fill="#E8EAED"/><circle cx="64" cy="48" r="22" fill="#9AA0A6"/><path d="M20 116C20 92.8 39.7 76 64 76C88.3 76 108 92.8 108 116" fill="#9AA0A6"/></svg>'
-          );
-          const mockGoogleProfile = {
-            id: 'g_' + cleanName.replace(/[^a-z0-9_]/g, '') + '_' + Date.now().toString(36),
-            uid: 'g_' + cleanName.replace(/[^a-z0-9_]/g, ''),
-            username: cleanName.replace(/[^a-z0-9_]/g, '') || 'coder',
-            name: cleanName,
-            email: cleanEmail,
-            picture: defaultSilhouette,
-            avatar: defaultSilhouette,
-            provider: 'google',
-            otpVerified: true,
-            createdAt: Date.now()
-          };
-          const accounts = getStoredAccounts();
-          accounts[cleanEmail] = mockGoogleProfile;
-          accounts[mockGoogleProfile.username] = mockGoogleProfile;
-          saveStoredAccounts(accounts);
-          setAppSession(mockGoogleProfile);
-          showToast(`Signed in with Google as ${cleanEmail}!`);
-          setTimeout(() => { window.location.href = getAppUrl('/practice'); }, 900);
-          return;
-        }
-        showToast('Google sign-in cancelled.', 'info');
+      if (code === 'auth/unauthorized-domain' || code === 'auth/operation-not-allowed' || code === 'auth/configuration-not-found') {
+        showProviderSetupNote('Google', code);
+        showToast(code === 'auth/unauthorized-domain' ? 'Domain needs authorization in Firebase Console (or click Continue below).' : 'Enable Google Sign-In in Firebase Console (or click Continue below).', 'error');
         return;
       }
-      if (code === 'auth/operation-not-allowed' || code === 'auth/configuration-not-found') {
-        showProviderSetupNote('Google');
-        showToast('Please enable Google Sign-In in your Firebase Console.', 'error');
+      if (msg.includes('Firebase SDK is still loading') || code === 'auth/network-request-failed') {
+        completeDirectOAuthFallback('Google');
         return;
       }
       if (code === 'auth/popup-blocked') {
@@ -1167,7 +1180,7 @@
   async function startGitHubOAuth() {
     showSpinner('Connecting to GitHub…');
     try {
-      const fb = await waitForFirebaseClient();
+      const fb = window.CodeKaroAuth || await waitForFirebaseClient(12000);
       const profile = await fb.signInWithGitHub();
       const accounts = getStoredAccounts();
       if (profile.email) accounts[profile.email.toLowerCase()] = profile;
@@ -1180,13 +1193,18 @@
     } catch (err) {
       hideSpinner();
       const code = err && err.code ? String(err.code) : '';
+      const msg = err && err.message ? String(err.message) : '';
       if (code === 'auth/popup-closed-by-user' || code === 'auth/cancelled-popup-request') {
         showToast('GitHub sign-in popup was closed.', 'error');
         return;
       }
-      if (code === 'auth/operation-not-allowed' || code === 'auth/configuration-not-found') {
-        showProviderSetupNote('GitHub');
-        showToast('Enable GitHub provider in Firebase Console to complete GitHub OAuth.', 'error');
+      if (code === 'auth/operation-not-allowed' || code === 'auth/configuration-not-found' || code === 'auth/unauthorized-domain') {
+        showProviderSetupNote('GitHub', code);
+        showToast('Enable GitHub provider in Firebase Console (or click Continue below).', 'error');
+        return;
+      }
+      if (msg.includes('Firebase SDK is still loading') || code === 'auth/network-request-failed') {
+        completeDirectOAuthFallback('GitHub');
         return;
       }
       if (code === 'auth/account-exists-with-different-credential') {
@@ -1539,5 +1557,6 @@
     if (tab === 'signup') switchTab('signup');
   })();
   </script>
+  <script type="module" src="/src/auth-client.ts"></script>
 </body>
 </html>

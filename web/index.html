@@ -472,7 +472,7 @@
       align-self: center;
       justify-self: center;
       margin: 0;
-      padding: 76px 20px 0;
+      padding: 0;
       color: #f4f4f6;
       font-size: clamp(48px, 10vw, 112px);
       font-family: var(--home-display-font);
@@ -481,6 +481,10 @@
       line-height: 1.05;
       text-align: center;
       text-shadow: 0 2px 28px rgba(5, 10, 20, .5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
     }
 
     .hero-title__text {
@@ -505,13 +509,13 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: center;
       gap: 32px;
       width: 100%;
-      padding: 76px 20px 0;
-    }
-
-    .hero-title {
-      padding: 0;
+      min-height: 100svh;
+      padding: 20px;
+      box-sizing: border-box;
+      text-align: center;
     }
 
     @property --hero-cta-angle {
@@ -1155,7 +1159,7 @@
 
     @media (max-width: 560px) {
       .navbar { min-height: 64px; }
-      .hero-content { padding-top: 64px; gap: 26px; }
+      .hero-content { padding: 20px; gap: 26px; min-height: 100svh; }
       .hero-title { font-size: clamp(44px, 13vw, 72px); }
       .hero-cta { min-height: 48px; padding: 0 22px; font-size: 11px; }
     }
@@ -1312,38 +1316,66 @@
 <body id="top">
   <main class="hero">
     <canvas class="gradient-ascii-canvas" aria-hidden="true"></canvas>
-    <header class="navbar" style="position: absolute; top: 0; left: 0; right: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; min-height: 76px; padding: 0 clamp(22px, 6vw, 88px); border-bottom: 1px solid rgba(220, 229, 247, .06);">
-      <div style="width: 40px;"></div>
-      <a class="nav-island__brand" href="/" aria-label="CodeKaro home" style="font-family: 'Lexend Giga', sans-serif; font-size: 16px; font-weight: 700; text-decoration: none; color: inherit; position: absolute; left: 50%; transform: translateX(-50%);">CodeKaro</a>
-      <div style="display: flex; align-items: center; gap: 12px; margin-left: auto;">
-        <button class="theme-switch theme-switch--compact" data-theme-switch type="button" aria-label="Switch theme" aria-pressed="false" style="position: static;">
-          <svg class="theme-switch__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <g class="theme-switch__sun-rays" stroke="currentColor" stroke-linecap="round" stroke-width="1.7">
-              <circle cx="12" cy="12" r="3.7" fill="currentColor" stroke="none" />
-              <path d="M12 2.5v2M12 19.5v2M4.4 4.4l1.4 1.4m12.4 12.4 1.4 1.4M2.5 12h2m15 0h2M4.4 19.6l1.4-1.4M18.2 5.8l1.4-1.4" />
-            </g>
-            <g class="theme-switch__moon">
-              <circle cx="12" cy="12" r="7.5" fill="currentColor" />
-              <circle class="theme-switch__moon-cutout" cx="16" cy="8" r="6" />
-            </g>
+    <header class="navbar">
+      <a class="repository-link repository-link--social" href="https://github.com/rajeevranjan4812-star/oops-judge" target="_blank" rel="noopener noreferrer" aria-label="Open the Code-Karo.dev GitHub repository" title="GitHub repository">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .9a11.1 11.1 0 0 0-3.51 21.63c.55.1.76-.24.76-.53v-2.08c-3.1.67-3.75-1.32-3.75-1.32-.5-1.28-1.24-1.62-1.24-1.62-1.01-.69.08-.68.08-.68 1.12.08 1.71 1.15 1.71 1.15 1 .1.76 2.68 3.76 2.03.1-.72.39-1.21.7-1.49-2.48-.28-5.09-1.24-5.09-5.52 0-1.22.44-2.21 1.15-2.99-.12-.28-.5-1.42.11-2.96 0 0 .94-.3 3.05 1.14a10.6 10.6 0 0 1 5.55 0c2.11-1.44 3.05-1.14 3.05-1.14.61 1.54.23 2.68.11 2.96.72.78 1.15 1.77 1.15 2.99 0 4.29-2.61 5.24-5.1 5.51.4.35.75 1.02.75 2.06V22c0 .29.2.63.76.53A11.1 11.1 0 0 0 12 .9Z"/></svg>
+        <span class="repository-link__label">GitHub</span>
+      </a>
+      <div class="home-auth">
+        <button class="home-auth__button" type="button" aria-label="Account options" aria-haspopup="true" aria-expanded="false">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="1.7"/>
+            <path d="M4.8 20c.7-3.3 3.2-5.1 7.2-5.1s6.5 1.8 7.2 5.1" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
           </svg>
-          <span class="theme-switch__label" data-theme-label>Dark</span>
         </button>
-        <div class="navbar-hamburger-wrapper" style="position: relative; display: inline-flex;">
-          <button class="hamburger-btn" type="button" aria-label="Toggle menu" aria-expanded="false" style="background: transparent; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; padding: 7px; cursor: pointer; color: inherit; display: flex; flex-direction: column; justify-content: space-between; width: 38px; height: 38px;">
-            <span style="display: block; width: 20px; height: 2px; background: currentColor; border-radius: 2px;"></span>
-            <span style="display: block; width: 20px; height: 2px; background: currentColor; border-radius: 2px;"></span>
-            <span style="display: block; width: 20px; height: 2px; background: currentColor; border-radius: 2px;"></span>
-          </button>
-          <div class="hamburger-dropdown" style="position: absolute; top: calc(100% + 10px); right: 0; min-width: 220px; background: #0a0a0c; border: 1px solid rgba(255,255,255,0.16); border-radius: 12px; padding: 8px; box-shadow: 0 16px 36px rgba(0,0,0,0.5); opacity: 0; pointer-events: none; transform: translateY(-4px); transition: all 0.2s ease; z-index: 100;">
-            <a href="/" style="display: block; padding: 10px 14px; color: #f4f4f6; text-decoration: none; font-size: 14px; border-radius: 8px;">Home</a>
-            <a href="/dashboard" style="display: block; padding: 10px 14px; color: #f4f4f6; text-decoration: none; font-size: 14px; border-radius: 8px;">Dashboard</a>
-            <a href="/practice" style="display: block; padding: 10px 14px; color: #f4f4f6; text-decoration: none; font-size: 14px; border-radius: 8px;">Practice IDE</a>
-            <a href="/profile" style="display: block; padding: 10px 14px; color: #f4f4f6; text-decoration: none; font-size: 14px; border-radius: 8px;">Profile &amp; Stats</a>
-            <a href="/about" style="display: block; padding: 10px 14px; color: #f4f4f6; text-decoration: none; font-size: 14px; border-radius: 8px;">About</a>
-            <a href="https://github.com/rajeevranjan4812-star/oops-judge" target="_blank" rel="noopener noreferrer" style="display: block; padding: 10px 14px; color: #f4f4f6; text-decoration: none; font-size: 14px; border-radius: 8px;">GitHub Repository</a>
-            <a href="/auth" style="display: block; padding: 10px 14px; color: #26d7f4; text-decoration: none; font-size: 14px; border-radius: 8px; font-weight: 600;">Log in / Sign up</a>
+        <div class="home-auth__panel">
+          <p class="home-auth__prompt">Code-Karo Account</p>
+          <div class="home-auth__actions" style="display:flex;flex-direction:column;gap:8px;">
+            <a class="home-auth__link" href="/profile">Profile &amp; Stats</a>
+            <a class="home-auth__link" href="/practice">Practice IDE</a>
+            <div style="display:flex;gap:8px;">
+              <a class="home-auth__link" href="/auth?auth=signup">Sign up</a>
+              <a class="home-auth__link" href="/auth">Log in</a>
+            </div>
           </div>
+        </div>
+      </div>
+      <button class="theme-switch theme-switch--compact" data-theme-switch type="button" aria-label="Switch theme" aria-pressed="false">
+        <svg class="theme-switch__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <g class="theme-switch__sun-rays" stroke="currentColor" stroke-linecap="round" stroke-width="1.7">
+            <circle cx="12" cy="12" r="3.7" fill="currentColor" stroke="none" />
+            <path d="M12 2.5v2M12 19.5v2M4.4 4.4l1.4 1.4m12.4 12.4 1.4 1.4M2.5 12h2m15 0h2M4.4 19.6l1.4-1.4M18.2 5.8l1.4-1.4" />
+          </g>
+          <g class="theme-switch__moon">
+            <circle cx="12" cy="12" r="7.5" fill="currentColor" />
+            <circle class="theme-switch__moon-cutout" cx="16" cy="8" r="6" />
+          </g>
+        </svg>
+        <span class="theme-switch__label" data-theme-label>Dark</span>
+      </button>
+      <nav class="nav-island" data-nav-island aria-label="Main sections">
+        <a class="nav-island__brand" href="/" aria-label="CodeKaro home">CodeKaro</a>
+        <div class="nav-island__links">
+          <a class="nav-island__link" href="/" data-nav-link aria-current="page">Home</a>
+          <a class="nav-island__link" href="/dashboard" data-nav-link>Dashboard</a>
+          <a class="nav-island__link" href="/practice" data-nav-link>Practice</a>
+          <a class="nav-island__link" href="/about" data-nav-link>About</a>
+        </div>
+      </nav>
+      <div class="navbar-hamburger-wrapper">
+        <button class="hamburger-btn" type="button" aria-label="Toggle menu" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <div class="hamburger-dropdown">
+          <a href="/">Home</a>
+          <a href="/dashboard">Dashboard</a>
+          <a href="/practice">Practice IDE</a>
+          <a href="/profile">Profile &amp; Stats</a>
+          <a href="/about">About</a>
+          <a href="https://github.com/rajeevranjan4812-star/oops-judge" target="_blank" rel="noopener noreferrer">GitHub Repository</a>
+          <a href="/auth" style="color: #26d7f4; font-weight: 600;">Log in / Sign up</a>
         </div>
       </div>
     </header>
@@ -1362,162 +1394,7 @@
       </div>
     </section>
   </main>
-  <div id="stagger-testimonials-root" style="width: 100%; overflow: hidden;"></div>
-  <div id="features-bento-root">
-    <section aria-label="Platform features" class="w-full bg-[#09090b] px-6 py-20 text-[#fafafa] transition-colors [[data-theme=light]_&]:bg-white [[data-theme=light]_&]:text-[#09090b] sm:px-10 lg:px-20">
-      <div class="mx-auto flex max-w-6xl flex-col items-center">
-        <div class="mb-14 flex max-w-4xl flex-col items-center text-center">
-          <span class="mb-4 inline-flex items-center gap-2.5 font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-zinc-400 [[data-theme=light]_&]:text-zinc-600">
-            <span class="h-px w-5 bg-current"></span>
-            Practice Java
-            <span class="h-px w-5 bg-current"></span>
-          </span>
-          <h2 class="text-center text-2xl font-bold leading-snug tracking-tight text-current sm:text-4xl md:text-[2.5rem] md:leading-[1.22]">
-            Learn Java by writing it. Solve focused programming challenges, run your code against real tests, and turn each problem into progress.
-          </h2>
-        </div>
-
-        <div class="grid w-full auto-rows-[20rem] grid-cols-1 md:grid-cols-3 gap-4">
-          <!-- Card 1: Write Real Java Code (col-span-2) -->
-          <div class="group relative col-span-3 md:col-span-2 flex flex-col justify-between overflow-hidden rounded-2xl bg-[#0a0a0c] text-[#fafafa] border border-white/15 shadow-sm [[data-theme=light]_&]:bg-white [[data-theme=light]_&]:text-[#09090b] [[data-theme=light]_&]:border-black/12 transform-gpu transition-all duration-300 hover:border-white/35 [[data-theme=light]_&]:hover:border-black/35">
-            <div>
-              <div class="pointer-events-none absolute inset-x-5 top-5 rounded-xl border border-white/15 bg-[#121215] p-4 font-mono text-xs text-zinc-300 shadow-sm transition-all duration-300 group-hover:border-white/30 [[data-theme=light]_&]:border-black/12 [[data-theme=light]_&]:bg-zinc-50 [[data-theme=light]_&]:text-zinc-800 [[data-theme=light]_&]:group-hover:border-black/25">
-                <div class="mb-2 flex items-center gap-1.5">
-                  <span class="h-2.5 w-2.5 rounded-full bg-zinc-600 [[data-theme=light]_&]:bg-zinc-300"></span>
-                  <span class="h-2.5 w-2.5 rounded-full bg-zinc-500 [[data-theme=light]_&]:bg-zinc-400"></span>
-                  <span class="h-2.5 w-2.5 rounded-full bg-zinc-400 [[data-theme=light]_&]:bg-zinc-500"></span>
-                  <span class="ml-2 text-[11px] text-zinc-400 [[data-theme=light]_&]:text-zinc-500">Solution.java</span>
-                </div>
-                <pre class="overflow-hidden leading-relaxed"><span class="font-semibold text-white [[data-theme=light]_&]:text-black">public class</span> <span class="underline decoration-zinc-500/50 underline-offset-2">BankAccount</span> {
-  <span class="font-semibold text-white [[data-theme=light]_&]:text-black">private double</span> balance;
-  <span class="font-semibold text-white [[data-theme=light]_&]:text-black">public void</span> <span class="font-medium">deposit</span>(double amt) {
-    if (amt &gt; 0) balance += amt;
-  }
-}</pre>
-              </div>
-            </div>
-            <div class="pointer-events-none z-10 flex transform-gpu flex-col gap-2 p-6 transition-all duration-300 group-hover:-translate-y-8">
-              <h3 class="text-lg font-semibold text-current tracking-tight">Write Real Java Code</h3>
-              <p class="max-w-lg text-[15px] leading-relaxed text-zinc-400 [[data-theme=light]_&]:text-zinc-600">Practice object-oriented Java in a distraction-free browser IDE with syntax highlighting and starter templates.</p>
-            </div>
-            <div class="pointer-events-none absolute bottom-0 flex w-full translate-y-8 transform-gpu flex-row items-center p-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
-              <a href="/practice" class="pointer-events-auto inline-flex items-center justify-center rounded-md text-sm font-medium h-9 px-3 text-current hover:bg-white/10 [[data-theme=light]_&]:hover:bg-black/5">
-                Open Editor
-                <svg class="ms-2 h-4 w-4 rtl:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-              </a>
-            </div>
-            <div class="pointer-events-none absolute inset-0 transform-gpu transition-all duration-300 group-hover:bg-white/[.02] [[data-theme=light]_&]:group-hover:bg-black/[.02]"></div>
-          </div>
-
-          <!-- Card 2: Instant Test Suites (col-span-1) -->
-          <div class="group relative col-span-3 md:col-span-1 flex flex-col justify-between overflow-hidden rounded-2xl bg-[#0a0a0c] text-[#fafafa] border border-white/15 shadow-sm [[data-theme=light]_&]:bg-white [[data-theme=light]_&]:text-[#09090b] [[data-theme=light]_&]:border-black/12 transform-gpu transition-all duration-300 hover:border-white/35 [[data-theme=light]_&]:hover:border-black/35">
-            <div>
-              <div class="pointer-events-none absolute inset-x-5 top-5 flex flex-col gap-2.5">
-                <div class="flex items-center justify-between rounded-lg border border-white/15 bg-[#121215] px-3.5 py-2.5 text-xs transition-all duration-300 group-hover:translate-x-1 [[data-theme=light]_&]:border-black/12 [[data-theme=light]_&]:bg-zinc-50">
-                  <span class="flex items-center gap-2 font-medium text-zinc-100 [[data-theme=light]_&]:text-zinc-900"><span class="h-2 w-2 rounded-full bg-white [[data-theme=light]_&]:bg-black"></span>Test 01 · Inheritance Hierarchy</span>
-                  <span class="font-mono text-[11px] text-zinc-400 [[data-theme=light]_&]:text-zinc-600">12 ms</span>
-                </div>
-                <div class="flex items-center justify-between rounded-lg border border-white/15 bg-[#121215] px-3.5 py-2.5 text-xs transition-all duration-300 group-hover:translate-x-1 [[data-theme=light]_&]:border-black/12 [[data-theme=light]_&]:bg-zinc-50">
-                  <span class="flex items-center gap-2 font-medium text-zinc-100 [[data-theme=light]_&]:text-zinc-900"><span class="h-2 w-2 rounded-full bg-white [[data-theme=light]_&]:bg-black"></span>Test 02 · Polymorphic Dispatch</span>
-                  <span class="font-mono text-[11px] text-zinc-400 [[data-theme=light]_&]:text-zinc-600">18 ms</span>
-                </div>
-                <div class="flex items-center justify-between rounded-lg border border-white/15 bg-[#121215] px-3.5 py-2.5 text-xs transition-all duration-300 group-hover:translate-x-1 [[data-theme=light]_&]:border-black/12 [[data-theme=light]_&]:bg-zinc-50">
-                  <span class="flex items-center gap-2 font-medium text-zinc-100 [[data-theme=light]_&]:text-zinc-900"><span class="h-2 w-2 rounded-full bg-white [[data-theme=light]_&]:bg-black"></span>Test 03 · Encapsulation Guards</span>
-                  <span class="font-mono text-[11px] text-zinc-400 [[data-theme=light]_&]:text-zinc-600">9 ms</span>
-                </div>
-              </div>
-            </div>
-            <div class="pointer-events-none z-10 flex transform-gpu flex-col gap-2 p-6 transition-all duration-300 group-hover:-translate-y-8">
-              <h3 class="text-lg font-semibold text-current tracking-tight">Instant Test Suites</h3>
-              <p class="max-w-lg text-[15px] leading-relaxed text-zinc-400 [[data-theme=light]_&]:text-zinc-600">Execute your solution against real unit tests with millisecond runtime feedback and clear diffs.</p>
-            </div>
-            <div class="pointer-events-none absolute bottom-0 flex w-full translate-y-8 transform-gpu flex-row items-center p-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
-              <a href="/practice" class="pointer-events-auto inline-flex items-center justify-center rounded-md text-sm font-medium h-9 px-3 text-current hover:bg-white/10 [[data-theme=light]_&]:hover:bg-black/5">
-                Run Tests
-                <svg class="ms-2 h-4 w-4 rtl:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-              </a>
-            </div>
-            <div class="pointer-events-none absolute inset-0 transform-gpu transition-all duration-300 group-hover:bg-white/[.02] [[data-theme=light]_&]:group-hover:bg-black/[.02]"></div>
-          </div>
-
-          <!-- Card 3: Contribution Skyline (col-span-1) -->
-          <div class="group relative col-span-3 md:col-span-1 flex flex-col justify-between overflow-hidden rounded-2xl bg-[#0a0a0c] text-[#fafafa] border border-white/15 shadow-sm [[data-theme=light]_&]:bg-white [[data-theme=light]_&]:text-[#09090b] [[data-theme=light]_&]:border-black/12 transform-gpu transition-all duration-300 hover:border-white/35 [[data-theme=light]_&]:hover:border-black/35">
-            <div>
-              <div class="pointer-events-none absolute inset-x-5 top-6 flex h-32 items-end justify-between gap-2 rounded-xl border border-white/15 bg-[#121215] p-4 [[data-theme=light]_&]:border-black/12 [[data-theme=light]_&]:bg-zinc-50">
-                <div style="height:35%" class="w-full rounded-t-sm bg-white/80 transition-all duration-300 group-hover:bg-white [[data-theme=light]_&]:bg-black/75 [[data-theme=light]_&]:group-hover:bg-black"></div>
-                <div style="height:60%" class="w-full rounded-t-sm bg-white/80 transition-all duration-300 group-hover:bg-white [[data-theme=light]_&]:bg-black/75 [[data-theme=light]_&]:group-hover:bg-black"></div>
-                <div style="height:45%" class="w-full rounded-t-sm bg-white/80 transition-all duration-300 group-hover:bg-white [[data-theme=light]_&]:bg-black/75 [[data-theme=light]_&]:group-hover:bg-black"></div>
-                <div style="height:85%" class="w-full rounded-t-sm bg-white/80 transition-all duration-300 group-hover:bg-white [[data-theme=light]_&]:bg-black/75 [[data-theme=light]_&]:group-hover:bg-black"></div>
-                <div style="height:55%" class="w-full rounded-t-sm bg-white/80 transition-all duration-300 group-hover:bg-white [[data-theme=light]_&]:bg-black/75 [[data-theme=light]_&]:group-hover:bg-black"></div>
-                <div style="height:95%" class="w-full rounded-t-sm bg-white/80 transition-all duration-300 group-hover:bg-white [[data-theme=light]_&]:bg-black/75 [[data-theme=light]_&]:group-hover:bg-black"></div>
-                <div style="height:70%" class="w-full rounded-t-sm bg-white/80 transition-all duration-300 group-hover:bg-white [[data-theme=light]_&]:bg-black/75 [[data-theme=light]_&]:group-hover:bg-black"></div>
-                <div style="height:40%" class="w-full rounded-t-sm bg-white/80 transition-all duration-300 group-hover:bg-white [[data-theme=light]_&]:bg-black/75 [[data-theme=light]_&]:group-hover:bg-black"></div>
-                <div style="height:80%" class="w-full rounded-t-sm bg-white/80 transition-all duration-300 group-hover:bg-white [[data-theme=light]_&]:bg-black/75 [[data-theme=light]_&]:group-hover:bg-black"></div>
-                <div style="height:100%" class="w-full rounded-t-sm bg-white/80 transition-all duration-300 group-hover:bg-white [[data-theme=light]_&]:bg-black/75 [[data-theme=light]_&]:group-hover:bg-black"></div>
-              </div>
-            </div>
-            <div class="pointer-events-none z-10 flex transform-gpu flex-col gap-2 p-6 transition-all duration-300 group-hover:-translate-y-8">
-              <h3 class="text-lg font-semibold text-current tracking-tight">Contribution Skyline</h3>
-              <p class="max-w-lg text-[15px] leading-relaxed text-zinc-400 [[data-theme=light]_&]:text-zinc-600">Visualize your daily coding streak in an interactive 2D heatmap or 3D isometric skyline.</p>
-            </div>
-            <div class="pointer-events-none absolute bottom-0 flex w-full translate-y-8 transform-gpu flex-row items-center p-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
-              <a href="/dashboard" class="pointer-events-auto inline-flex items-center justify-center rounded-md text-sm font-medium h-9 px-3 text-current hover:bg-white/10 [[data-theme=light]_&]:hover:bg-black/5">
-                View Dashboard
-                <svg class="ms-2 h-4 w-4 rtl:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-              </a>
-            </div>
-            <div class="pointer-events-none absolute inset-0 transform-gpu transition-all duration-300 group-hover:bg-white/[.02] [[data-theme=light]_&]:group-hover:bg-black/[.02]"></div>
-          </div>
-
-          <!-- Card 4: Structured OOP Mastery (col-span-2) -->
-          <div class="group relative col-span-3 md:col-span-2 flex flex-col justify-between overflow-hidden rounded-2xl bg-[#0a0a0c] text-[#fafafa] border border-white/15 shadow-sm [[data-theme=light]_&]:bg-white [[data-theme=light]_&]:text-[#09090b] [[data-theme=light]_&]:border-black/12 transform-gpu transition-all duration-300 hover:border-white/35 [[data-theme=light]_&]:hover:border-black/35">
-            <div>
-              <div class="pointer-events-none absolute inset-x-5 top-5 flex flex-col gap-3 rounded-xl border border-white/15 bg-[#121215] p-4 [[data-theme=light]_&]:border-black/12 [[data-theme=light]_&]:bg-zinc-50">
-                <div class="space-y-1.5">
-                  <div class="flex justify-between text-xs">
-                    <span class="font-medium text-zinc-100 [[data-theme=light]_&]:text-zinc-900">Classes &amp; Objects</span>
-                    <span class="font-mono text-zinc-400 [[data-theme=light]_&]:text-zinc-600">92%</span>
-                  </div>
-                  <div class="h-1.5 w-full overflow-hidden rounded-full bg-white/15 [[data-theme=light]_&]:bg-black/10">
-                    <div style="width:92%" class="h-full rounded-full bg-white transition-all duration-500 [[data-theme=light]_&]:bg-black"></div>
-                  </div>
-                </div>
-                <div class="space-y-1.5">
-                  <div class="flex justify-between text-xs">
-                    <span class="font-medium text-zinc-100 [[data-theme=light]_&]:text-zinc-900">Inheritance &amp; Interfaces</span>
-                    <span class="font-mono text-zinc-400 [[data-theme=light]_&]:text-zinc-600">78%</span>
-                  </div>
-                  <div class="h-1.5 w-full overflow-hidden rounded-full bg-white/15 [[data-theme=light]_&]:bg-black/10">
-                    <div style="width:78%" class="h-full rounded-full bg-white transition-all duration-500 [[data-theme=light]_&]:bg-black"></div>
-                  </div>
-                </div>
-                <div class="space-y-1.5">
-                  <div class="flex justify-between text-xs">
-                    <span class="font-medium text-zinc-100 [[data-theme=light]_&]:text-zinc-900">Collections &amp; Generics</span>
-                    <span class="font-mono text-zinc-400 [[data-theme=light]_&]:text-zinc-600">64%</span>
-                  </div>
-                  <div class="h-1.5 w-full overflow-hidden rounded-full bg-white/15 [[data-theme=light]_&]:bg-black/10">
-                    <div style="width:64%" class="h-full rounded-full bg-white transition-all duration-500 [[data-theme=light]_&]:bg-black"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="pointer-events-none z-10 flex transform-gpu flex-col gap-2 p-6 transition-all duration-300 group-hover:-translate-y-8">
-              <h3 class="text-lg font-semibold text-current tracking-tight">Structured OOP Mastery</h3>
-              <p class="max-w-lg text-[15px] leading-relaxed text-zinc-400 [[data-theme=light]_&]:text-zinc-600">Turn every solved challenge into measurable progress across encapsulation, inheritance, polymorphism, and abstraction.</p>
-            </div>
-            <div class="pointer-events-none absolute bottom-0 flex w-full translate-y-8 transform-gpu flex-row items-center p-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
-              <a href="/dashboard" class="pointer-events-auto inline-flex items-center justify-center rounded-md text-sm font-medium h-9 px-3 text-current hover:bg-white/10 [[data-theme=light]_&]:hover:bg-black/5">
-                Track Progress
-                <svg class="ms-2 h-4 w-4 rtl:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-              </a>
-            </div>
-            <div class="pointer-events-none absolute inset-0 transform-gpu transition-all duration-300 group-hover:bg-white/[.02] [[data-theme=light]_&]:group-hover:bg-black/[.02]"></div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
+  <div id="features-bento-root"></div>
   <section class="community-avatars" aria-label="Code-Karo.dev team">
     <div class="community-avatars__list" id="community-avatars-list">
       <!-- Fallback avatars in team order: Rajeev, Shubham, Duwarka, Sahaj -->
@@ -1598,110 +1475,8 @@
       }
     })();
   </script>
-  <section id="stagger-testimonials-root" aria-label="Developer testimonials"></section>
-  <div id="faqs-root">
-    <section aria-label="Frequently Asked Questions" class="w-full bg-[#09090b] px-6 py-20 text-[#fafafa] transition-colors [[data-theme=light]_&]:bg-white [[data-theme=light]_&]:text-[#09090b] sm:px-10 lg:px-20">
-      <div class="mx-auto flex max-w-4xl flex-col items-center">
-        <div class="mb-10 flex max-w-2xl flex-col items-center text-center">
-          <span class="mb-3 inline-flex items-center gap-2.5 font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-zinc-400 [[data-theme=light]_&]:text-zinc-600">
-            <span class="h-px w-5 bg-current"></span>
-            FAQ
-            <span class="h-px w-5 bg-current"></span>
-          </span>
-          <h2 class="text-center text-2xl font-bold tracking-tight text-current sm:text-4xl">
-            Frequently Asked Questions
-          </h2>
-        </div>
-        <div class="w-full max-w-3xl flex flex-col gap-3" id="native-faq-accordion">
-          <div class="faq-item overflow-hidden rounded-xl border border-white/15 bg-[#0a0a0c] text-[#fafafa] transition-all duration-200 [[data-theme=light]_&]:border-black/12 [[data-theme=light]_&]:bg-white [[data-theme=light]_&]:text-[#09090b]">
-            <button type="button" class="faq-btn flex w-full cursor-pointer items-center justify-between gap-4 px-5 py-4 text-left text-base font-semibold text-current" aria-expanded="true">
-              <span class="flex items-center text-base font-medium leading-snug">How do I start solving Java problems on CodeKaro?</span>
-              <svg class="faq-icon size-4 shrink-0 transition-transform duration-200 rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
-            </button>
-            <div class="faq-body border-t border-white/10 px-5 pb-4 pt-3 text-[15px] leading-relaxed text-zinc-400 [[data-theme=light]_&]:border-black/10 [[data-theme=light]_&]:text-zinc-600">
-              Open the Practice Editor, select any object-oriented Java challenge from the problem list, write your solution in the browser IDE, and click Run Code to test against real unit test cases immediately.
-            </div>
-          </div>
-          <div class="faq-item overflow-hidden rounded-xl border border-white/15 bg-[#0a0a0c] text-[#fafafa] transition-all duration-200 [[data-theme=light]_&]:border-black/12 [[data-theme=light]_&]:bg-white [[data-theme=light]_&]:text-[#09090b]">
-            <button type="button" class="faq-btn flex w-full cursor-pointer items-center justify-between gap-4 px-5 py-4 text-left text-base font-semibold text-current" aria-expanded="false">
-              <span class="flex items-center text-base font-medium leading-snug">How does the automated Java judge evaluate my code?</span>
-              <svg class="faq-icon size-4 shrink-0 transition-transform duration-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
-            </button>
-            <div class="faq-body border-t border-white/10 px-5 pb-4 pt-3 text-[15px] leading-relaxed text-zinc-400 [[data-theme=light]_&]:border-black/10 [[data-theme=light]_&]:text-zinc-600" style="display:none;">
-              Every submission is compiled and executed against structured unit and edge-case test suites. You receive instant verdict badges, execution runtime in milliseconds, and detailed expected-vs-actual diffs.
-            </div>
-          </div>
-          <div class="faq-item overflow-hidden rounded-xl border border-white/15 bg-[#0a0a0c] text-[#fafafa] transition-all duration-200 [[data-theme=light]_&]:border-black/12 [[data-theme=light]_&]:bg-white [[data-theme=light]_&]:text-[#09090b]">
-            <button type="button" class="faq-btn flex w-full cursor-pointer items-center justify-between gap-4 px-5 py-4 text-left text-base font-semibold text-current" aria-expanded="false">
-              <span class="flex items-center text-base font-medium leading-snug">Is CodeKaro completely free for students and developers?</span>
-              <svg class="faq-icon size-4 shrink-0 transition-transform duration-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
-            </button>
-            <div class="faq-body border-t border-white/10 px-5 pb-4 pt-3 text-[15px] leading-relaxed text-zinc-400 [[data-theme=light]_&]:border-black/10 [[data-theme=light]_&]:text-zinc-600" style="display:none;">
-              Yes. All Java OOP tracks, interactive test suites, the 3D Contribution Skyline, and progress analytics are completely free and open-source.
-            </div>
-          </div>
-          <div class="faq-item overflow-hidden rounded-xl border border-white/15 bg-[#0a0a0c] text-[#fafafa] transition-all duration-200 [[data-theme=light]_&]:border-black/12 [[data-theme=light]_&]:bg-white [[data-theme=light]_&]:text-[#09090b]">
-            <button type="button" class="faq-btn flex w-full cursor-pointer items-center justify-between gap-4 px-5 py-4 text-left text-base font-semibold text-current" aria-expanded="false">
-              <span class="flex items-center text-base font-medium leading-snug">What Java OOP topics and challenges are included?</span>
-              <svg class="faq-icon size-4 shrink-0 transition-transform duration-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
-            </button>
-            <div class="faq-body border-t border-white/10 px-5 pb-4 pt-3 text-[15px] leading-relaxed text-zinc-400 [[data-theme=light]_&]:border-black/10 [[data-theme=light]_&]:text-zinc-600" style="display:none;">
-              Challenges cover classes and objects, encapsulation, inheritance hierarchies, polymorphism, abstract classes and interfaces, matrix transformations, and thread-safe concurrency patterns.
-            </div>
-          </div>
-          <div class="faq-item overflow-hidden rounded-xl border border-white/15 bg-[#0a0a0c] text-[#fafafa] transition-all duration-200 [[data-theme=light]_&]:border-black/12 [[data-theme=light]_&]:bg-white [[data-theme=light]_&]:text-[#09090b]">
-            <button type="button" class="faq-btn flex w-full cursor-pointer items-center justify-between gap-4 px-5 py-4 text-left text-base font-semibold text-current" aria-expanded="false">
-              <span class="flex items-center text-base font-medium leading-snug">Can I access my coding streak and progress from any device?</span>
-              <svg class="faq-icon size-4 shrink-0 transition-transform duration-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
-            </button>
-            <div class="faq-body border-t border-white/10 px-5 pb-4 pt-3 text-[15px] leading-relaxed text-zinc-400 [[data-theme=light]_&]:border-black/10 [[data-theme=light]_&]:text-zinc-600" style="display:none;">
-              Yes. Sign in with Google, GitHub, or Email OTP to sync your solved problems, daily practice streak, and submission history across browsers.
-            </div>
-          </div>
-          <div class="faq-item overflow-hidden rounded-xl border border-white/15 bg-[#0a0a0c] text-[#fafafa] transition-all duration-200 [[data-theme=light]_&]:border-black/12 [[data-theme=light]_&]:bg-white [[data-theme=light]_&]:text-[#09090b]">
-            <button type="button" class="faq-btn flex w-full cursor-pointer items-center justify-between gap-4 px-5 py-4 text-left text-base font-semibold text-current" aria-expanded="false">
-              <span class="flex items-center text-base font-medium leading-snug">Can I reset my starter code or retry a solved challenge?</span>
-              <svg class="faq-icon size-4 shrink-0 transition-transform duration-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
-            </button>
-            <div class="faq-body border-t border-white/10 px-5 pb-4 pt-3 text-[15px] leading-relaxed text-zinc-400 [[data-theme=light]_&]:border-black/10 [[data-theme=light]_&]:text-zinc-600" style="display:none;">
-              You can reset the editor back to the clean Java starter template at any time and submit multiple solutions to compare runtime efficiency.
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
-  <script>
-    (() => {
-      const container = document.getElementById('native-faq-accordion');
-      if (!container) return;
-      container.addEventListener('click', (e) => {
-        const btn = e.target.closest('.faq-btn');
-        if (!btn) return;
-        const item = btn.closest('.faq-item');
-        if (!item) return;
-        const body = item.querySelector('.faq-body');
-        const icon = item.querySelector('.faq-icon');
-        const isOpen = btn.getAttribute('aria-expanded') === 'true';
-        container.querySelectorAll('.faq-item').forEach(it => {
-          const b = it.querySelector('.faq-btn');
-          const bd = it.querySelector('.faq-body');
-          const ic = it.querySelector('.faq-icon');
-          if (b && bd && ic) {
-            b.setAttribute('aria-expanded', 'false');
-            bd.style.display = 'none';
-            ic.classList.remove('rotate-180');
-          }
-        });
-        if (!isOpen) {
-          btn.setAttribute('aria-expanded', 'true');
-          body.style.display = 'block';
-          icon.classList.add('rotate-180');
-        }
-      });
-    })();
-  </script>
   <div id="stagger-testimonials-root" style="width: 100%; overflow: hidden;"></div>
+  <div id="faqs-root"></div>
   <footer class="site-footer" aria-label="Code-Karo.dev footer">
     <img class="site-footer__art" src="./footer-gradient.jpg" onerror="this.src='/footer-gradient.jpg'" alt="" aria-hidden="true">
     <div class="footer-jobs">
@@ -1754,7 +1529,11 @@
     </div>
     <p class="site-footer__brand">CODE-KARO.DEV</p>
   </footer>
-  <script type="module" src="/src/testimonials-entry.tsx"></script>
+  <script type="module">
+    import('./assets/testimonials-entry.js')
+      .catch(() => import('/assets/testimonials-entry.js'))
+      .catch(() => import('/src/testimonials-entry.tsx'));
+  </script>
   <script src="/gooey-nav.js" defer></script>
   <script src="/gradient-ascii.js" defer></script>
   <script src="/type-writer.js" defer></script>

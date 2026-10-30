@@ -18,6 +18,10 @@
 </head>
 <body>
   <main id="not-found-root" aria-label="404 Page Not Found"></main>
-  <script type="module" src="/src/not-found-entry.tsx"></script>
+  <script type="module">
+    import('./assets/not-found-entry.js')
+      .catch(() => import('/assets/not-found-entry.js'))
+      .catch(() => import('/src/not-found-entry.tsx'));
+  </script>
 </body>
 </html>

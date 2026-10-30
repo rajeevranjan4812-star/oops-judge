@@ -649,7 +649,11 @@
       .queue-char { opacity: 1 !important; transform: none !important; filter: none !important; }
     }
   </style>
-  <script type="module" src="/src/auth-client.ts"></script>
+  <script type="module">
+    import('./assets/auth-client.js')
+      .catch(() => import('/assets/auth-client.js'))
+      .catch(() => import('/src/auth-client.ts'));
+  </script>
 </head>
 <body>
 

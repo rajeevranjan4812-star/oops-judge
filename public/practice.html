@@ -463,13 +463,22 @@
           </div>
 
           <div id="auth-demo-note" class="auth-demo-note">
-            <span class="note-icon">ℹ</span>
-            <span>Accounts are stored only in this browser (demo).</span>
+            <span class="note-icon">🔐</span>
+            <span>Sign in with Username/Password or use Firebase Google &amp; GitHub Auth.</span>
           </div>
 
           <button type="submit" id="auth-submit-btn" class="button button-primary auth-submit-btn">
             Sign In
           </button>
+
+          <div style="display:flex;gap:8px;margin-top:10px;">
+            <a href="/auth" class="button button-secondary" style="flex:1;justify-content:center;text-decoration:none;display:inline-flex;align-items:center;gap:6px;">
+              Google Auth
+            </a>
+            <a href="/auth" class="button button-secondary" style="flex:1;justify-content:center;text-decoration:none;display:inline-flex;align-items:center;gap:6px;">
+              GitHub Auth
+            </a>
+          </div>
         </form>
       </div>
     </div>

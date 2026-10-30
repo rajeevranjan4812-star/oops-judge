@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "tsx server.ts",
-    "build": "vite build",
+    "build": "vite build && node -e \"const fs=require('fs'); fs.mkdirSync('public/assets',{recursive:true}); fs.mkdirSync('web/assets',{recursive:true}); fs.cpSync('dist/assets','public/assets',{recursive:true}); fs.cpSync('dist/assets','web/assets',{recursive:true});\"",
     "start": "NODE_ENV=production tsx server.ts",
     "preview": "vite preview",
     "lint": "eslint firestore.rules",
